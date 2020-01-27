@@ -9,6 +9,8 @@
   </head>
   <body>
     
+    
+    
   </body>
 </html>
 
@@ -24,6 +26,20 @@
     <div class="row">
       <div class="col-md-8 mx-auto">
         <h2>Myプロフィール</h2>
+        <div class="element_wrap">
+		      <label>氏名</label>
+		      <input type="text" name="your_name" value="">
+	      </div>
+	      <div class="element_wrap">
+		      <label>性別</label>
+		      <input type="text" name="gender" value="">
+	      </div>
+	      <div class="element_wrap">
+		      <label>趣味</label>
+		      <input type="text" name="hobby" value="">
+	      </div>
+	      <label for="introduction">自己紹介欄</label>
+	      <textarea id="introduction" name="introduction"></textarea>
       </div>
     </div>
   </div>

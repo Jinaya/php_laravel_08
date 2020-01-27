@@ -38,8 +38,22 @@
 		      <label>趣味</label>
 		      <input type="text" name="hobby" value="">
 	      </div>
-	      <label for="introduction">自己紹介欄</label>
-	      <textarea id="introduction" name="introduction"></textarea>
+	      <div class="form-group row">
+          <label class="col-md-2" for="introduction">自己紹介</label>
+          <div class="col-md-10">
+            <textarea class="form-control" name="introduction" rows="20">{{ old('body') }}</textarea>
+          </div>
+        </div>
+	      @if (count($errors) > 0)
+          <ul>
+            @foreach($errors->all() as $e)
+              <li>{{ $e }}</li>
+            @endforeach
+          </ul>
+        @endif
+        
+        {{ csrf_field() }}
+        <input type="submit" class="btn btn-primary" value="更新">
       </div>
     </div>
   </div>

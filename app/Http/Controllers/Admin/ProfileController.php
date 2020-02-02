@@ -5,19 +5,52 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use App\Profile;
+
 class ProfileController extends Controller
 {
-    public function add(){
-        return view('admin.profile.create');
-    }
-    public function create(Request $request){
-        return redirect('admin.profile.create');
-    }
-    public function edit(){
-        return view('admin.profile.edit');
-    }
-    public function update(){
-        return redirect('admin.profile.edit');
-    }
+  public function add(){
+    return view('admin.profile.create');
+  }
+  public function create(Request $request){
+    // Varidationを行う
+    $this->validate($request, Profile::$rules);
+
+    $profile = new Profile;
+    $form = $request->all();
+
+
+    // フォームから送信されてきた_tokenを削除する
+    unset($form['_token']);
+    
+    // データベースに保存する
+    $profile->fill($form);
+    $profile->save();
+    // admin/profile/createにリダイレクトする
+    return redirect('admin/profile/create');
+  }
+  public function edit(Request $request){
+    $profile = Profile::find($request->id);
+    return view('admin.profile.edit', ['profile' => $profile]);
+  }
+  public function update(Request $request){
+    // Varidationを行う
+    $this->validate($request, Profile::$rules);
+    
+    // 更新対象のレコードをデータベースから取得
+    $profile = Profile::find($request->id);
+    
+    // リクエストに入っているパラメータを連想配列として$formに取り出す
+    $form = $request->all();
+    
+    // 不要なパラメータを削除する
+    unset($form['_token']);
+    
+    // プロフィールモデルに更新された値を詰めて保存
+    $profile->fill($form)->save();
+    
+    // 更新した結果を確認できるようにプロフィール編集画面に遷移
+    return view('admin.profile.edit', ['profile' => $profile]);
+  }
 }
 
